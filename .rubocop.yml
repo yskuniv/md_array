@@ -11,14 +11,5 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Enabled: false
 
-Style/BlockDelimiters:
-  EnforcedStyle: semantic
-
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/StringLiterals:
+Style:
   Enabled: false
