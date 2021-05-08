@@ -105,7 +105,7 @@ module MdArray
 
     def validate_index(index)
       if @sub_arrays
-        index_n, *sub_index = index
+        index_n, *_sub_index = index
         size_n = @sub_arrays.length
 
         raise IndexError unless (0...size_n) === index_n
