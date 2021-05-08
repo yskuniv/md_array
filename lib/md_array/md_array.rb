@@ -2,6 +2,8 @@ require "md_array/utils"
 
 module MdArray
   class MdArray
+    include Enumerable
+
     def initialize(size, val = nil, &block)
       if size.length > 0
         size_n, *sub_size = size
@@ -95,6 +97,40 @@ module MdArray
         )
       else
         []
+      end
+    end
+
+    def enum
+      if @sub_arrays
+        @sub_arrays.map(&:enum).reduce(&:chain)
+      else
+        [@val]
+      end
+    end
+
+    def enum_with_index
+      if @sub_arrays
+        @sub_arrays.each_with_index.map { |sub_array, index_n|
+          sub_array.enum_with_index.map { |val, sub_index| [val, [index_n, *sub_index]] }
+        }.reduce(&:chain)
+      else
+        [[@val, []]]
+      end
+    end
+
+    def each(&block)
+      if block
+        enum.each(&block)
+      else
+        enum
+      end
+    end
+
+    def each_with_index(&block)
+      if block
+        enum_with_index.each(&block)
+      else
+        enum_with_index
       end
     end
 
