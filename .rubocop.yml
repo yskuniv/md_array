@@ -14,5 +14,8 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Enabled: false
 
+Naming/MethodParameterName:
+  Enabled: false
+
 Style:
   Enabled: false

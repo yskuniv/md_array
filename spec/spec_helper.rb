@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "rspec-parameterized"
 require "md_array"
 
 RSpec.configure do |config|
