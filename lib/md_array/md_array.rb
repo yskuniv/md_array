@@ -2,6 +2,8 @@ require "md_array/utils"
 
 module MdArray
   class MdArray
+    include Enumerable
+
     def initialize(size, val = nil, &block)
       if size.length > 0
         size_n, *sub_size = size
