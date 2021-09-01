@@ -21,7 +21,7 @@ module MdArray
       if @sub_arrays
         size_n = @sub_arrays.length
 
-        [size_n, *@sub_arrays[0].size]
+        [size_n, *@sub_arrays.first.size]
       else
         []
       end
@@ -29,7 +29,7 @@ module MdArray
 
     def dimension
       if @sub_arrays
-        1 + @sub_arrays[0].dimension
+        1 + @sub_arrays.first.dimension
       else
         0
       end
