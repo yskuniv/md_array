@@ -1,4 +1,4 @@
-require "md_array/utils"
+require "utils"
 
 module MdArray
   class MdArray
