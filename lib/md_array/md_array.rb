@@ -1,4 +1,4 @@
-require "md_array/utils"
+require "utils"
 
 module MdArray
   class MdArray
@@ -9,9 +9,8 @@ module MdArray
         size_n, *sub_size = size
 
         @sub_arrays = Array.new(size_n) { |i|
-          MdArray.new(sub_size,
-                      val,
-                      &(block && Utils.partial(block, i)))
+          block_ = Utils.partial(block, i) if block
+          MdArray.new(sub_size, val, &block_)
         }
       else
         @val = block ? block[] : val
@@ -22,7 +21,7 @@ module MdArray
       if @sub_arrays
         size_n = @sub_arrays.length
 
-        [size_n, *@sub_arrays[0].size]
+        [size_n, *@sub_arrays.first.size]
       else
         []
       end
@@ -30,7 +29,7 @@ module MdArray
 
     def dimension
       if @sub_arrays
-        1 + @sub_arrays[0].dimension
+        1 + @sub_arrays.first.dimension
       else
         0
       end
@@ -144,7 +143,7 @@ module MdArray
         index_n, *_sub_index = index
         size_n = @sub_arrays.length
 
-        raise IndexError unless (0...size_n) === index_n
+        raise IndexError unless index_n && (0...size_n) === index_n
       else
         raise IndexError unless index == []
       end
