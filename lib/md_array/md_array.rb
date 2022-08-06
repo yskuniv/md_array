@@ -7,7 +7,7 @@ module MdArray
         size_n, *sub_size = size
 
         @sub_arrays = Array.new(size_n) { |i|
-          block_ = Utils.partial(block, i) if block
+          block_ = FuncUtils.partial(block, i) if block
           MdArray.new(sub_size, val, &block_)
         }
       else
