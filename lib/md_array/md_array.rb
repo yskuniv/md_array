@@ -1,5 +1,3 @@
-require "utils"
-
 module MdArray
   class MdArray
     include Enumerable
