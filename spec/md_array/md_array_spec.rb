@@ -73,7 +73,7 @@ RSpec.describe MdArray do
 
       with_them do
         it "responds correctly" do
-          md = MdArray::MdArray.new([4, 4, 4]) { |z, y, x| [z, y, x] }
+          md = MdArray::MdArray.new([5, 5, 5]) { |z, y, x| [z, y, x] }
           expect(md.adjacent(index)).to match_array expected
         end
       end
@@ -92,7 +92,7 @@ RSpec.describe MdArray do
 
       with_them do
         it "responds correctly" do
-          md = MdArray::MdArray.new([4, 4, 4]) { |z, y, x| [z, y, x] }
+          md = MdArray::MdArray.new([5, 5, 5]) { |z, y, x| [z, y, x] }
           expect(md.neighborhood(index)).to match_array expected
         end
       end
