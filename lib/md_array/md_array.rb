@@ -26,7 +26,7 @@ module MdArray
 
     def dimension
       if @sub_arrays
-        1 + @sub_arrays.first.dimension
+        @sub_arrays.first.dimension + 1
       else
         0
       end
