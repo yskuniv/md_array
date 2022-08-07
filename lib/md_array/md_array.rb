@@ -1,5 +1,3 @@
-require "utils"
-
 module MdArray
   class MdArray
     include Enumerable
@@ -9,8 +7,7 @@ module MdArray
         size_n, *sub_size = size
 
         @sub_arrays = Array.new(size_n) { |i|
-          block_ = Utils.partial(block, i) if block
-          MdArray.new(sub_size, val, &block_)
+          MdArray.new(sub_size, val, &(FuncUtils.partial(block, i) if block))
         }
       else
         @val = block ? block[] : val
@@ -29,7 +26,7 @@ module MdArray
 
     def dimension
       if @sub_arrays
-        1 + @sub_arrays.first.dimension
+        @sub_arrays.first.dimension + 1
       else
         0
       end
@@ -120,6 +117,8 @@ module MdArray
     def each(&block)
       if block
         enum.each(&block)
+
+        self
       else
         enum
       end
@@ -128,6 +127,8 @@ module MdArray
     def each_with_index(&block)
       if block
         enum_with_index.each(&block)
+
+        self
       else
         enum_with_index
       end

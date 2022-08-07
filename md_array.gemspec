@@ -22,11 +22,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "debase", "~> 0.2.4"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-parameterized", "~> 0.4"
   spec.add_development_dependency "rubocop", "~> 1.13"
-  spec.add_development_dependency "ruby-debug-ide", "~> 0.7"
-  spec.add_development_dependency "solargraph", "~> 0.40"
 end
