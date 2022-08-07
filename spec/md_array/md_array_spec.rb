@@ -123,6 +123,11 @@ RSpec.describe MdArray do
                                     [2, 1, 0], [2, 1, 1], [2, 1, 2],
                                     [2, 2, 0], [2, 2, 1], [2, 2, 2]]
       end
+
+      it "returns self if called with block" do
+        md = MdArray::MdArray.new([])
+        expect(md.each { |_| }).to eq md  # rubocop:disable Lint/EmptyBlock
+      end
     end
 
     describe "each_with_index" do
@@ -137,6 +142,11 @@ RSpec.describe MdArray do
                                                [[2, 0, 0], [2, 0, 0]], [[2, 0, 1], [2, 0, 1]], [[2, 0, 2], [2, 0, 2]],
                                                [[2, 1, 0], [2, 1, 0]], [[2, 1, 1], [2, 1, 1]], [[2, 1, 2], [2, 1, 2]],
                                                [[2, 2, 0], [2, 2, 0]], [[2, 2, 1], [2, 2, 1]], [[2, 2, 2], [2, 2, 2]]]
+      end
+
+      it "returns self if called with block" do
+        md = MdArray::MdArray.new([])
+        expect(md.each { |_, _| }).to eq md  # rubocop:disable Lint/EmptyBlock
       end
     end
   end
