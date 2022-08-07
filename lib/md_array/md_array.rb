@@ -117,6 +117,8 @@ module MdArray
     def each(&block)
       if block
         enum.each(&block)
+
+        self
       else
         enum
       end
@@ -125,6 +127,8 @@ module MdArray
     def each_with_index(&block)
       if block
         enum_with_index.each(&block)
+
+        self
       else
         enum_with_index
       end
