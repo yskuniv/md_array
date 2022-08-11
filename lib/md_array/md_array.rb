@@ -81,6 +81,26 @@ module MdArray
       end
     end
 
+    def adjacent_with_index(index)
+      validate_index(index)
+
+      if @sub_arrays
+        index_n, *sub_index = index
+        size_n = @sub_arrays.length
+
+        Enumerator::Chain.new(
+          (0...size_n) === index_n - 1 ?
+          [[@sub_arrays[index_n - 1].at(sub_index), [index_n - 1, *sub_index]]] : [],
+          @sub_arrays[index_n].adjacent_with_index(sub_index)
+                              .map { |v, si| [v, [index_n, *si]] },
+          (0...size_n) === index_n + 1 ?
+          [[@sub_arrays[index_n + 1].at(sub_index), [index_n + 1, *sub_index]]] : []
+        )
+      else
+        []
+      end
+    end
+
     def neighborhood(index)
       validate_index(index)
 
@@ -96,6 +116,30 @@ module MdArray
           (0...size_n) === index_n + 1 ?
           Enumerator::Chain.new([@sub_arrays[index_n + 1].at(sub_index)],
                                 @sub_arrays[index_n + 1].neighborhood(sub_index)) : []
+        )
+      else
+        []
+      end
+    end
+
+    def neighborhood_with_index(index)
+      validate_index(index)
+
+      if @sub_arrays
+        index_n, *sub_index = index
+        size_n = @sub_arrays.length
+
+        Enumerator::Chain.new(
+          (0...size_n) === index_n - 1 ?
+          Enumerator::Chain.new([[@sub_arrays[index_n - 1].at(sub_index), [index_n - 1, *sub_index]]],
+                                @sub_arrays[index_n - 1].neighborhood_with_index(sub_index)
+                                                        .map { |v, si| [v, [index_n - 1, *si]] }) : [],
+          @sub_arrays[index_n].neighborhood_with_index(sub_index)
+                              .map { |v, si| [v, [index_n, *si]] },
+          (0...size_n) === index_n + 1 ?
+          Enumerator::Chain.new([[@sub_arrays[index_n + 1].at(sub_index), [index_n + 1, *sub_index]]],
+                                @sub_arrays[index_n + 1].neighborhood_with_index(sub_index)
+                                                        .map { |v, si| [v, [index_n + 1, *si]] }) : []
         )
       else
         []
