@@ -63,22 +63,7 @@ module MdArray
     end
 
     def adjacent(index)
-      validate_index(index)
-
-      if @sub_arrays
-        index_n, *sub_index = index
-        size_n = @sub_arrays.length
-
-        Enumerator::Chain.new(
-          (0...size_n) === index_n - 1 ?
-          [@sub_arrays[index_n - 1].at(sub_index)] : [],
-          @sub_arrays[index_n].adjacent(sub_index),
-          (0...size_n) === index_n + 1 ?
-          [@sub_arrays[index_n + 1].at(sub_index)] : []
-        )
-      else
-        []
-      end
+      adjacent_with_index(index).lazy.map { |v, _| v }
     end
 
     def adjacent_with_index(index)
@@ -102,24 +87,7 @@ module MdArray
     end
 
     def neighborhood(index)
-      validate_index(index)
-
-      if @sub_arrays
-        index_n, *sub_index = index
-        size_n = @sub_arrays.length
-
-        Enumerator::Chain.new(
-          (0...size_n) === index_n - 1 ?
-          Enumerator::Chain.new([@sub_arrays[index_n - 1].at(sub_index)],
-                                @sub_arrays[index_n - 1].neighborhood(sub_index)) : [],
-          @sub_arrays[index_n].neighborhood(sub_index),
-          (0...size_n) === index_n + 1 ?
-          Enumerator::Chain.new([@sub_arrays[index_n + 1].at(sub_index)],
-                                @sub_arrays[index_n + 1].neighborhood(sub_index)) : []
-        )
-      else
-        []
-      end
+      neighborhood_with_index(index).lazy.map { |v, _| v }
     end
 
     def neighborhood_with_index(index)
