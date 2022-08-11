@@ -101,6 +101,28 @@ RSpec.describe MdArray do
       end
     end
 
+    describe "adjacent_with_index" do
+      where(:index, :expected) do
+        [
+          [[0, 0, 0], [[[0, 0, 1], [0, 0, 1]],
+                       [[0, 1, 0], [0, 1, 0]],
+                       [[1, 0, 0], [1, 0, 0]]]],
+          [[2, 2, 2], [[[1, 2, 2], [1, 2, 2]],
+                       [[2, 1, 2], [2, 1, 2]],
+                       [[2, 2, 1], [2, 2, 1]], [[2, 2, 3], [2, 2, 3]],
+                       [[2, 3, 2], [2, 3, 2]],
+                       [[3, 2, 2], [3, 2, 2]]]]
+        ]
+      end
+
+      with_them do
+        it "responds correctly" do
+          md = MdArray::MdArray.new([5, 5, 5]) { |z, y, x| [z, y, x] }
+          expect(md.adjacent_with_index(index)).to match_array expected
+        end
+      end
+    end
+
     describe "neighborhood" do
       where(:index, :expected) do
         [
@@ -124,6 +146,33 @@ RSpec.describe MdArray do
         it "responds correctly" do
           md = MdArray::MdArray.new([5, 5, 5]) { |z, y, x| [z, y, x] }
           expect(md.neighborhood(index)).to match_array expected
+        end
+      end
+    end
+
+    describe "neighborhood_with_index" do
+      where(:index, :expected) do
+        [
+          [[0, 0, 0], [[[0, 0, 1], [0, 0, 1]],
+                       [[0, 1, 0], [0, 1, 0]], [[0, 1, 1], [0, 1, 1]],
+                       [[1, 0, 0], [1, 0, 0]], [[1, 0, 1], [1, 0, 1]],
+                       [[1, 1, 0], [1, 1, 0]], [[1, 1, 1], [1, 1, 1]]]],
+          [[2, 2, 2], [[[1, 1, 1], [1, 1, 1]], [[1, 1, 2], [1, 1, 2]], [[1, 1, 3], [1, 1, 3]],
+                       [[1, 2, 1], [1, 2, 1]], [[1, 2, 2], [1, 2, 2]], [[1, 2, 3], [1, 2, 3]],
+                       [[1, 3, 1], [1, 3, 1]], [[1, 3, 2], [1, 3, 2]], [[1, 3, 3], [1, 3, 3]],
+                       [[2, 1, 1], [2, 1, 1]], [[2, 1, 2], [2, 1, 2]], [[2, 1, 3], [2, 1, 3]],
+                       [[2, 2, 1], [2, 2, 1]], [[2, 2, 3], [2, 2, 3]],
+                       [[2, 3, 1], [2, 3, 1]], [[2, 3, 2], [2, 3, 2]], [[2, 3, 3], [2, 3, 3]],
+                       [[3, 1, 1], [3, 1, 1]], [[3, 1, 2], [3, 1, 2]], [[3, 1, 3], [3, 1, 3]],
+                       [[3, 2, 1], [3, 2, 1]], [[3, 2, 2], [3, 2, 2]], [[3, 2, 3], [3, 2, 3]],
+                       [[3, 3, 1], [3, 3, 1]], [[3, 3, 2], [3, 3, 2]], [[3, 3, 3], [3, 3, 3]]]]
+        ]
+      end
+
+      with_them do
+        it "responds correctly" do
+          md = MdArray::MdArray.new([5, 5, 5]) { |z, y, x| [z, y, x] }
+          expect(md.neighborhood_with_index(index)).to match_array expected
         end
       end
     end
