@@ -1,5 +1,23 @@
 RSpec.describe MdArray do
   describe MdArray do
+    describe "new" do
+      where(:size) do
+        [
+          [[0]],
+          [[0, 1]],
+          [[1, 0]],
+        ]
+      end
+
+      with_them do
+        it "raises InvalidSizeSpecified when invalid size specified" do
+          expect {
+            MdArray::MdArray.new(size)
+          }.to raise_error(MdArray::MdArray::InvalidSizeSpecified)
+        end
+      end
+    end
+
     describe "size" do
       where(:size) do
         [
