@@ -63,6 +63,10 @@ module MdArray
     end
 
     def adjacent(index)
+      adjacent_with_index(index).lazy.map { |v, _| v }
+    end
+
+    def adjacent_with_index(index)
       validate_index(index)
 
       if @sub_arrays
@@ -71,10 +75,11 @@ module MdArray
 
         Enumerator::Chain.new(
           (0...size_n) === index_n - 1 ?
-          [@sub_arrays[index_n - 1].at(sub_index)] : [],
-          @sub_arrays[index_n].adjacent(sub_index),
+          [[@sub_arrays[index_n - 1].at(sub_index), [index_n - 1, *sub_index]]] : [],
+          @sub_arrays[index_n].adjacent_with_index(sub_index)
+                              .map { |v, si| [v, [index_n, *si]] },
           (0...size_n) === index_n + 1 ?
-          [@sub_arrays[index_n + 1].at(sub_index)] : []
+          [[@sub_arrays[index_n + 1].at(sub_index), [index_n + 1, *sub_index]]] : []
         )
       else
         []
@@ -82,6 +87,10 @@ module MdArray
     end
 
     def neighborhood(index)
+      neighborhood_with_index(index).lazy.map { |v, _| v }
+    end
+
+    def neighborhood_with_index(index)
       validate_index(index)
 
       if @sub_arrays
@@ -90,12 +99,15 @@ module MdArray
 
         Enumerator::Chain.new(
           (0...size_n) === index_n - 1 ?
-          Enumerator::Chain.new([@sub_arrays[index_n - 1].at(sub_index)],
-                                @sub_arrays[index_n - 1].neighborhood(sub_index)) : [],
-          @sub_arrays[index_n].neighborhood(sub_index),
+          Enumerator::Chain.new([[@sub_arrays[index_n - 1].at(sub_index), [index_n - 1, *sub_index]]],
+                                @sub_arrays[index_n - 1].neighborhood_with_index(sub_index)
+                                                        .map { |v, si| [v, [index_n - 1, *si]] }) : [],
+          @sub_arrays[index_n].neighborhood_with_index(sub_index)
+                              .map { |v, si| [v, [index_n, *si]] },
           (0...size_n) === index_n + 1 ?
-          Enumerator::Chain.new([@sub_arrays[index_n + 1].at(sub_index)],
-                                @sub_arrays[index_n + 1].neighborhood(sub_index)) : []
+          Enumerator::Chain.new([[@sub_arrays[index_n + 1].at(sub_index), [index_n + 1, *sub_index]]],
+                                @sub_arrays[index_n + 1].neighborhood_with_index(sub_index)
+                                                        .map { |v, si| [v, [index_n + 1, *si]] }) : []
         )
       else
         []
