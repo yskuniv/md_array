@@ -2,9 +2,15 @@ module MdArray
   class MdArray
     include Enumerable
 
+    class Error < StandardError; end
+
+    class InvalidSizeSpecified < Error; end
+
     def initialize(size, val = nil, &block)
       if size.length > 0
         size_n, *sub_size = size
+
+        raise InvalidSizeSpecified unless size_n >= 1
 
         @sub_arrays = Array.new(size_n) { |i|
           MdArray.new(sub_size, val, &(FuncUtils.partial(block, i) if block))
