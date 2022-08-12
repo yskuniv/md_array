@@ -2,9 +2,7 @@ module MdArray
   class MdArray
     include Enumerable
 
-    class Error < StandardError; end
-
-    class InvalidSizeSpecified < Error; end
+    class InvalidSizeSpecified < ArgumentError; end
 
     def initialize(size, val = nil, &block)
       if size.length > 0
