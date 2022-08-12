@@ -64,6 +64,10 @@ module MdArray
       adjacent_with_index(index).lazy.map { |v, _| v }
     end
 
+    def adjacent_index(index)
+      adjacent_with_index(index).lazy.map { |_, i| i }
+    end
+
     def adjacent_with_index(index)
       validate_index(index)
 
@@ -86,6 +90,10 @@ module MdArray
 
     def neighborhood(index)
       neighborhood_with_index(index).lazy.map { |v, _| v }
+    end
+
+    def neighborhood_index(index)
+      neighborhood_with_index(index).lazy.map { |_, i| i }
     end
 
     def neighborhood_with_index(index)
