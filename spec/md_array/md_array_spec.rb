@@ -242,7 +242,7 @@ RSpec.describe MdArray do
 
       it "returns self if called with block" do
         md = MdArray::MdArray.new([])
-        expect(md.each { |_| }).to eq md  # rubocop:disable Lint/EmptyBlock
+        expect(md.each { |_| }).to eq md # rubocop:disable Lint/EmptyBlock
       end
     end
 
@@ -282,7 +282,7 @@ RSpec.describe MdArray do
 
       it "returns self if called with block" do
         md = MdArray::MdArray.new([])
-        expect(md.each { |_, _| }).to eq md  # rubocop:disable Lint/EmptyBlock
+        expect(md.each { |_, _| }).to eq md # rubocop:disable Lint/EmptyBlock
       end
     end
   end
