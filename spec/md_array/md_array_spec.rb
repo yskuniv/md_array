@@ -242,7 +242,27 @@ RSpec.describe MdArray do
 
       it "returns self if called with block" do
         md = MdArray::MdArray.new([])
-        expect(md.each { |_| }).to eq md  # rubocop:disable Lint/EmptyBlock
+        expect(md.each { |_| }).to eq md # rubocop:disable Lint/EmptyBlock
+      end
+    end
+
+    describe "each_index" do
+      it "responds correctly" do
+        md = MdArray::MdArray.new([3, 3, 3], 0)
+        expect(md.each_index).to match_array [[0, 0, 0], [0, 0, 1], [0, 0, 2],
+                                              [0, 1, 0], [0, 1, 1], [0, 1, 2],
+                                              [0, 2, 0], [0, 2, 1], [0, 2, 2],
+                                              [1, 0, 0], [1, 0, 1], [1, 0, 2],
+                                              [1, 1, 0], [1, 1, 1], [1, 1, 2],
+                                              [1, 2, 0], [1, 2, 1], [1, 2, 2],
+                                              [2, 0, 0], [2, 0, 1], [2, 0, 2],
+                                              [2, 1, 0], [2, 1, 1], [2, 1, 2],
+                                              [2, 2, 0], [2, 2, 1], [2, 2, 2]]
+      end
+
+      it "returns self if called with block" do
+        md = MdArray::MdArray.new([])
+        expect(md.each_index { |_| }).to eq md # rubocop:disable Lint/EmptyBlock
       end
     end
 
@@ -262,7 +282,7 @@ RSpec.describe MdArray do
 
       it "returns self if called with block" do
         md = MdArray::MdArray.new([])
-        expect(md.each { |_, _| }).to eq md  # rubocop:disable Lint/EmptyBlock
+        expect(md.each { |_, _| }).to eq md # rubocop:disable Lint/EmptyBlock
       end
     end
   end
