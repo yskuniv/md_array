@@ -148,6 +148,16 @@ module MdArray
       end
     end
 
+    def each_index(&block)
+      if block
+        enum_index.each(&block)
+
+        self
+      else
+        enum_index
+      end
+    end
+
     def each_with_index(&block)
       if block
         enum_with_index.each(&block)
