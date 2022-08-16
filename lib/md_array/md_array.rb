@@ -128,6 +128,10 @@ module MdArray
       end
     end
 
+    def enum_index
+      enum_with_index.lazy.map { |_, i| i }
+    end
+
     def enum_with_index
       if @sub_arrays
         @sub_arrays.each_with_index.map { |sub_array, index_n|
