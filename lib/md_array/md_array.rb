@@ -121,11 +121,7 @@ module MdArray
     end
 
     def enum
-      if @sub_arrays
-        @sub_arrays.map(&:enum).reduce(&:chain)
-      else
-        [@val]
-      end
+      enum_with_index.lazy.map { |v, _| v }
     end
 
     def enum_index
